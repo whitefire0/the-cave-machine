@@ -31,7 +31,11 @@
   }
 
   var consoleAPI = {
-    insertNum = function(num) {
+    insertNum: function(num) {
       memory.numbers.push(num);
+    },
+    add: function() {
+      memory.operators.push('+');
     }
   }
+
