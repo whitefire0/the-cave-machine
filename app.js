@@ -70,6 +70,16 @@
         result = firstNum + secondNum;
       }
       console.log(`${firstNum} + ${secondNum} = ${result}`)
+    },
+    clear: function() {
+      try {
+        memory.numbers = [];
+        memory.operators = [];
+        previousMemoryState.numbers = [],
+        previousMemoryState.operators = []
+      } catch (error) {
+        console.log(`There was an error clearing the memory, please debug your code. Error: ${error}`)
+      }
     }
   }
 
