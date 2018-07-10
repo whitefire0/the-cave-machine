@@ -26,6 +26,7 @@
   */
 
   var memory = {
+    operators: [],
     numbers: []
   }
 
