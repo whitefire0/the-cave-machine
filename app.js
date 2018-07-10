@@ -1,4 +1,16 @@
 /**
+ * Author: whitefire0
+ * Distributed under the MIT license
+ */
+
+/**
+ * Project intentions
+ * Develop a basic calculator application
+ * Commit in micro-steps for the purpose of teaching iterative application development
+ */
+
+
+/**
  * Projec spec:
  * TODO => it should have a place to store numbers
  * TODO => it should have a place to store operators
@@ -31,21 +43,33 @@
 
   var memory = {
     operators: [],
+    numbers: [],
+  }
+
+  var previousMemoryState = {
+    operators: [],
     numbers: []
   }
 
   var consoleAPI = {
-    insertNum: function(num) {
+    num: function(num) {
       memory.numbers.push(num);
+      if(memory.numbers.length > previousMemoryState.numbers.length) {
+        console.log(`${num} was added to memory position ${memory.numbers.length - 1}`);
+      }
     },
     add: function() {
       memory.operators.push('+');
     },
-    equals = function() {
+    equals: function() {
       var firstNum = memory.numbers[0];
       var secondNum = memory.numbers[1];
       var operator = memory.operators[0];
-      
+      var result;
+      if (operator == '+') {
+        result = firstNum + secondNum;
+      }
+      console.log(`${firstNum} + ${secondNum} = ${result}`)
     }
   }
 
