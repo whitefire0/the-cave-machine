@@ -9,7 +9,6 @@
  * Commit in micro-steps for the purpose of teaching iterative application development
  */
 
-
 /**
  * Projec spec:
  * TODO => it should have a place to store numbers
@@ -31,7 +30,7 @@
  /**
   * Understanding required to read this code:
   * variable assignment
-  * functions, function returns
+  * function/method fundamentals
   * data structures: arrays, objects
   * IIFEs
   * 
@@ -39,6 +38,12 @@
 
   /**
    * How to use this app:
+   * api.num(1)     adds 1 to memory. At least 2 values need to be in memory to run api.equals()
+   * api.add()      stores the '+' operator to add the values in memory
+   * api.equals()   takes the 2 numbers in memory and applies the operator (currently only addition)
+   * api.clear()    clears the calculator memory
+   * 
+   * This app is currently in absolute minimal working state. It would be very easy to make it dysfunctional.
    */
 
   var memory = {
@@ -72,45 +77,19 @@
       console.log(`${firstNum} + ${secondNum} = ${result}`)
     },
     clear: function() {
-      var check1, check2;
-
       memory.numbers = [];
       memory.operators = [];
-      check1 = helpers.memoryChangeChecksum(memory);
       previousMemoryState.numbers = [],
       previousMemoryState.operators = []
-      check2 = helpers.memoryChangeChecksum(previousMemoryState);
-        
-      console.log(`There was an error clearing the memory, please debug your code. Error: ${error}`)
-      
-      console.log(`Memory cleared successfully`);
-    }
-  }
 
-var helpers = {
-  memoryChangeChecksum: function(storage) {
-    var storageTotal = {
-      numbers: 0,
-      operators: 0
-    }
-
-    storage.numbers.forEach(function(i, val){
-      storageTotal.numbers += val;
-    });
-    storage.operators.forEach(function(i, val){
-      storageTotal.operators += i;
-    });
-
-    if(storageTotal.numbers == 0) {
-      if(memoryOperatorTotal - previousMemoryStateOperatorTotal == 0) {
-        console.log("Memory cleared successfully");
-        return true;
+      if(memory.numbers.length == 0) {
+        console.log(`Memory cleared successfully`);
+      } else {
+        console.log(`There was an error clearing the memory, please debug your code.`)
       }
-    } else {
-      console.log("There was an error clearing memory. Please debug your code.")
+
     }
   }
-}
 
 var api = consoleAPI;
 
@@ -120,6 +99,10 @@ var dev = {
     consoleAPI.num(1);
     consoleAPI.add();
     consoleAPI.equals();
-    consoleAPI.clear();
+    // consoleAPI.clear();
+  },
+  printMemory: function() {
+    console.log("Memory: ", memory);
+    console.log("Previous Memory State: ", previousMemoryState);
   }
 }
