@@ -72,15 +72,54 @@
       console.log(`${firstNum} + ${secondNum} = ${result}`)
     },
     clear: function() {
-      try {
-        memory.numbers = [];
-        memory.operators = [];
-        previousMemoryState.numbers = [],
-        previousMemoryState.operators = []
-      } catch (error) {
-        console.log(`There was an error clearing the memory, please debug your code. Error: ${error}`)
-      }
+      var check1, check2;
+
+      memory.numbers = [];
+      memory.operators = [];
+      check1 = helpers.memoryChangeChecksum(memory);
+      previousMemoryState.numbers = [],
+      previousMemoryState.operators = []
+      check2 = helpers.memoryChangeChecksum(previousMemoryState);
+        
+      console.log(`There was an error clearing the memory, please debug your code. Error: ${error}`)
+      
+      console.log(`Memory cleared successfully`);
     }
   }
 
-  var api = consoleAPI;
+var helpers = {
+  memoryChangeChecksum: function(storage) {
+    var storageTotal = {
+      numbers: 0,
+      operators: 0
+    }
+
+    storage.numbers.forEach(function(i, val){
+      storageTotal.numbers += val;
+    });
+    storage.operators.forEach(function(i, val){
+      storageTotal.operators += i;
+    });
+
+    if(storageTotal.numbers == 0) {
+      if(memoryOperatorTotal - previousMemoryStateOperatorTotal == 0) {
+        console.log("Memory cleared successfully");
+        return true;
+      }
+    } else {
+      console.log("There was an error clearing memory. Please debug your code.")
+    }
+  }
+}
+
+var api = consoleAPI;
+
+var dev = {
+  addTwo: function() {
+    consoleAPI.num(1);
+    consoleAPI.num(1);
+    consoleAPI.add();
+    consoleAPI.equals();
+    consoleAPI.clear();
+  }
+}
