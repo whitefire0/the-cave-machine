@@ -25,3 +25,7 @@
   * 
   */
 
+  var memory = {
+    numbers: []
+  }
+
