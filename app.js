@@ -25,6 +25,10 @@
   * 
   */
 
+  /**
+   * How to use this app:
+   */
+
   var memory = {
     operators: [],
     numbers: []
@@ -36,6 +40,13 @@
     },
     add: function() {
       memory.operators.push('+');
+    },
+    equals = function() {
+      var firstNum = memory.numbers[0];
+      var secondNum = memory.numbers[1];
+      var operator = memory.operators[0];
+      
     }
   }
 
+  var api = consoleAPI;
