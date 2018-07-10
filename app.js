@@ -30,3 +30,8 @@
     numbers: []
   }
 
+  var consoleAPI = {
+    insertNum = function(num) {
+      memory.numbers.push(num);
+    }
+  }
