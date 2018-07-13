@@ -159,19 +159,23 @@ var dev = {
     api.add();
     api.num(2);
     var result = api.calculate();
-    // debugger;
     return result;
-    // consoleAPI.clear();
   },
   printMemory: function() {
     console.log("Memory: ", memory);
     console.log("Previous Memory State: ", previousMemoryState);
+  },
+  runTests: function() {
+    for (var testname in test) {
+      test[testname]();
+    }
   }
 }
 
 var test = {
   addTwo: function() {
     console.assert(dev.addTwo() == 3);
+    api.clear();
   },
   addThree: function() {
     api.num(1);
@@ -180,6 +184,7 @@ var test = {
     api.add();
     api.num(1);
     console.assert(api.calculate() == 3);
+    api.clear();
   },
   addThreeMinusOne: function() {
     api.num(1);
@@ -190,6 +195,8 @@ var test = {
     api.minus();
     api.num(1);
     console.assert(api.calculate() == 2);
-
+    api.clear();
   }
 }
+
+
