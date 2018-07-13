@@ -49,6 +49,7 @@
   var memory = {
     operators: [],
     numbers: [],
+    sum: 0
   }
 
   var previousMemoryState = {
@@ -65,6 +66,21 @@
     },
     add: function() {
       memory.operators.push('+');
+    },
+    minus: function() {
+      memory.operators.push('-');
+    },
+    calculate: function() {
+      /**
+       * 
+       */
+      if(core.checkCalculate()) {
+
+      } 
+      
+      
+      
+
     },
     equals: function() {
       var firstNum = memory.numbers[0];
@@ -90,6 +106,39 @@
 
     }
   }
+
+// 1 + 2 + 3 + 4
+// use a reduce function that has the operator in the callback
+var core = {
+  operatorPositionMatrix: {
+    0: [0, 1],
+    1: [2],
+    2: [3]
+    // ...
+  },
+  checkCalculate: function() {
+    if (memory.numbers.length > 0 && memory.operators.length > 0) {
+      switch (memory.numbers.length - memory.operators.length) {
+        case 1:
+          console.log("Memory is valid, calculating...");
+          return true;
+          break;
+        case 0 || -1:
+          console.log("Too many operators in memory. Add a number");
+          break;
+        case 2:
+          console.log("Too many numbers in memory. Add an operator.")
+          break;
+        default:
+          console.log("Check memory: where n = number of operators, the number of numbers should be n + 1");
+          break;
+      }
+    } else {
+      console.log("Ensure operators > 0 and numbers > 1");
+    }
+    return false;
+  }
+}
 
 var api = consoleAPI;
 
