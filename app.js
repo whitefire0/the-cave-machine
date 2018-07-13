@@ -180,5 +180,16 @@ var test = {
     api.add();
     api.num(1);
     console.assert(api.calculate() == 3);
+  },
+  addThreeMinusOne: function() {
+    api.num(1);
+    api.add();
+    api.num(1);
+    api.add();
+    api.num(1);
+    api.minus();
+    api.num(1);
+    console.assert(api.calculate() == 2);
+
   }
 }
