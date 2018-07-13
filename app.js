@@ -94,6 +94,7 @@
           }
         }, 0);
         console.log(`Calculation result: ${result}`);
+        return result;
       } 
       
       
@@ -125,15 +126,7 @@
     }
   }
 
-// 1 + 2 + 3 + 4
-// use a reduce function that has the operator in the callback
 var core = {
-  operatorPositionMatrix: {
-    0: [0, 1],
-    1: [2],
-    2: [3]
-    // ...
-  },
   checkCalculate: function() {
     if (memory.numbers.length > 0 && memory.operators.length > 0) {
       switch (memory.numbers.length - memory.operators.length) {
@@ -165,11 +158,27 @@ var dev = {
     api.num(1);
     api.add();
     api.num(2);
-    api.calculate();
+    var result = api.calculate();
+    // debugger;
+    return result;
     // consoleAPI.clear();
   },
   printMemory: function() {
     console.log("Memory: ", memory);
     console.log("Previous Memory State: ", previousMemoryState);
+  }
+}
+
+var test = {
+  addTwo: function() {
+    console.assert(dev.addTwo() == 3);
+  },
+  addThree: function() {
+    api.num(1);
+    api.add();
+    api.num(1);
+    api.add();
+    api.num(1);
+    console.assert(api.calculate() == 3);
   }
 }
