@@ -128,12 +128,18 @@
 
 var core = {
   checkCalculate: function() {
+    /* A function for checking cases to determine if input is valid. The if statement checks if the numbers.length 
+    and operators are both greater than 0. If they are greater than 0, both are checked against cases. (essentially conditional statements?)
+       */
     if (memory.numbers.length > 0 && memory.operators.length > 0) {
       switch (memory.numbers.length - memory.operators.length) {
+    // The break statement ends the current loop
         case 1:
+    // If this case, return true in the console.
           console.log("Memory is valid, calculating...");
           return true;
           break;
+    // Case zero or -1 (if there are to many operators) this case.
         case 0 || -1:
           console.log("Too many operators in memory. Add a number");
           break;
@@ -145,6 +151,8 @@ var core = {
           break;
       }
     } else {
+    /* If all cases fail this message will be logged to the console along with false.
+    */
       console.log("Ensure operators > 0 and numbers > 1");
     }
     return false;
