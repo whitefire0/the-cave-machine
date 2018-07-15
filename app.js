@@ -77,7 +77,10 @@
       if(core.checkCalculate()) {
         // debugger;
         var operatorIndex = 0;
+    /* A variable for storing the results of a reduce function (The reduce() method 
+     applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.)*/
         var result = memory.numbers.reduce(function(accumulator, value, index){
+    // If the index parameter is greater than 0, run the contained code. 
           if(index > 0) {
             switch (memory.operators[operatorIndex]) {
               case '+':
@@ -90,9 +93,12 @@
                 break;
             }
           } else {
+    // If the conditional evaluates to false, return accumulator plus value.
             return accumulator + value;
           }
+    // Starting value of 0
         }, 0);
+    // Logs a string with result variable.
         console.log(`Calculation result: ${result}`);
         return result;
       } 
@@ -163,9 +169,11 @@ var api = consoleAPI;
 
 var dev = {
   addTwo: function() {
+// A function for adding 2 numbers and one operator.
     api.num(1);
     api.add();
     api.num(2);
+// The results of api.calculate are stored in a variable for ease of access.
     var result = api.calculate();
     return result;
   },
@@ -181,8 +189,11 @@ var dev = {
 }
 
 var test = {
+// This is a full testing suite.
   addTwo: function() {
+// Writes an error message to the console if the assertion is false
     console.assert(dev.addTwo() == 3);
+// Runs the api.clear method.
     api.clear();
   },
   addThree: function() {
@@ -191,6 +202,7 @@ var test = {
     api.num(1);
     api.add();
     api.num(1);
+// If the assertion is true, runs a calculation.
     console.assert(api.calculate() == 3);
     api.clear();
   },
