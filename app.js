@@ -156,8 +156,9 @@ var core = {
         })(operator)
       }
       
-    });    
-    console.log(`Result: ${memory.queue[0]}`);
+    });
+    if(!dev.skipPrinting)    
+      console.log(`Result: ${memory.queue[0]}`);
     // debugger;
     return memory.queue[0];
   },
@@ -172,7 +173,11 @@ var test = {
     api.num(2);
     var result = api.calculate();
     var expected = 3;
-    return Boolean(result == expected);
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
   },
   addThree: function() {
     api.num(1);
@@ -182,7 +187,11 @@ var test = {
     api.num(1);
     var result = api.calculate();
     var expected = 3;
-    return Boolean(result == expected);
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
   },
   addThreeMinusOne: function() {
     api.num(1);
@@ -194,7 +203,11 @@ var test = {
     api.num(1);
     var result = api.calculate();
     var expected = 2;
-    return Boolean(result == expected);
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
   },
   multiplyTwoAddOne: function() {
     api.num(1);
@@ -204,7 +217,11 @@ var test = {
     api.num(3);
     var result = api.calculate();
     var expected = 7;
-    return Boolean(result == expected);
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
   },
   multiplyThreeAddOne: function() {
     api.num(1);
@@ -216,7 +233,11 @@ var test = {
     api.num(3);
     var result = api.calculate();
     var expected = 19;
-    return Boolean(result == expected);
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
   },
   multiplyFourDivideByTwo: function() {
     api.multiply();
@@ -231,14 +252,55 @@ var test = {
     api.num(2);
     var result = api.calculate();
     var expected = 8;
-    return Boolean(result == expected);
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
+  },
+  allFourOperatorsWithFiveNumbers: function() {
+    api.num(2);
+    api.multiply();
+    api.num(2);
+    api.divide();
+    api.num(2);
+    api.minus();
+    api.num(2);
+    api.add();
+    api.num(2);
+    var result = api.calculate();
+    var expected = -2;
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
+  },
+  allFourOperatorsWithFiveNumbers2: function() {
+    api.num(2);
+    api.minus();
+    api.num(1);
+    api.multiply();
+    api.num(3);
+    api.add();
+    api.num(2);
+    api.divide();
+    api.num(2);
+    var result = api.calculate();
+    var expected = 0;
+    return {
+      status: Boolean(result == expected),
+      result: result,
+      expected: expected
+    };
   },
   runTests: function() {
     dev.skipPrinting = true;
     for (var testname in test) {
       if(testname !== 'runTests'){
-        if(test[testname]()) {
-          // debugger;
+        var testResult = test[testname]();
+        console.log(`Expected: ${testResult.expected}, Actual: ${testResult.result}`);
+        if(testResult.status == true) {
           console.log(`%c${testname}: TEST PASSED\n\n`, 'color: green; font: bold;');
         } else {
           console.log(`%c${testname}: TEST FAILED\n\n`, 'color: red; font: bold;');
@@ -247,6 +309,7 @@ var test = {
       }
         
     }
+    dev.skipPrinting = false;
   }
 }
 
