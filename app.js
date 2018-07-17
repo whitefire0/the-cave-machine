@@ -94,34 +94,11 @@
       this.store('/');
     },
     calculate: function() {
-      /**
-       * 
-       */
-      if(core.checkCalculate()) {
-        // debugger;
-        var operatorIndex = 0;
-        var result = memory.numbers.reduce(function(accumulator, value, index){
-          if(index > 0) {
-            switch (memory.operators[operatorIndex]) {
-              case '+':
-                operatorIndex++;
-                return accumulator + value;
-              case '-':
-                operatorIndex++;
-                return accumulator - value;
-              default:
-                break;
-            }
-          } else {
-            return accumulator + value;
-          }
-        }, 0);
-        console.log(`Calculation result: ${result}`);
-        return result;
-      } 
+      
     },
     clear: function() {
-
+      memory.queue = [];
+      previousMemoryState.queue = [];
     }
   }
 
