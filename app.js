@@ -210,10 +210,11 @@ var test = {
       if(testname !== 'runTests'){
         if(test[testname]()) {
           // debugger;
-          console.log(`____TEST   ${testname}:   PASSED____`);
+          console.log(`%c${testname}: TEST PASSED\n\n`, 'color: green; font: bold;');
         } else {
-          console.log(`____TEST   ${testname}:   FAILED____`);
+          console.log(`%c${testname}: TEST FAILED\n\n`, 'color: green; font: bold;');
         }
+
       }
         
     }
