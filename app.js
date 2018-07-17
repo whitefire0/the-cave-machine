@@ -48,28 +48,43 @@
 
   var memory = {
     queue: [],
-    operators: [],
-    numbers: [],
-    sum: 0
   }
 
   var previousMemoryState = {
-    operators: [],
-    numbers: []
+    queue: [],
   }
 
   var consoleAPI = {
-    num: function(num) {
-      memory.numbers.push(num);
-      if(memory.numbers.length > previousMemoryState.numbers.length) {
-        console.log(`${num} was added to memory position ${memory.numbers.length - 1}`);
+    checkChange: function(val) {
+      if(memory.queue.length > previousMemoryState.queue.length) {
+        console.log(`${val} was added to memory position ${memory.queue.length - 1}`);
       }
     },
+    printMemory: function(){
+      console.log(memory.queue)
+    },
+    store: function(val) {
+      if(core.checkInput(val)) {
+        memory.queue.push(val);
+        this.checkChange(val);
+      } else {
+        console.log(`Error adding ${val} to memory. Operators and numbers must alternate`);
+      }
+    },
+    num: function(val) {
+      this.store(val);
+    },
     add: function() {
-      memory.operators.push('+');
+      this.store('+');
     },
     minus: function() {
-      memory.operators.push('-');
+      this.store('-');
+    },
+    multiply: function() {
+      this.store('*');
+    },
+    divide: function() {
+      this.store('/');
     },
     calculate: function() {
       /**
@@ -124,27 +139,18 @@
   }
 
 var core = {
-  checkCalculate: function() {
-    if (memory.numbers.length > 0 && memory.operators.length > 0) {
-      switch (memory.numbers.length - memory.operators.length) {
-        case 1:
-          console.log("Memory is valid, calculating...");
-          return true;
-          break;
-        case 0 || -1:
-          console.log("Too many operators in memory. Add a number");
-          break;
-        case 2:
-          console.log("Too many numbers in memory. Add an operator.")
-          break;
-        default:
-          console.log("Check memory: where n = number of operators, the number of numbers should be n + 1");
-          break;
-      }
+  checkInput: function(input) {
+    if (memory.queue.length == 0) {
+      return true;
     } else {
-      console.log("Ensure operators > 0 and numbers > 1");
+      if(typeof(input) == 'string' && typeof(memory.queue[memory.queue.length - 1]) == 'number') {
+        return true;
+      } else if (typeof(input) == 'number' && typeof(memory.queue[memory.queue.length - 1]) == 'string') {
+        return true;
+      } else {
+        return false;
+      }
     }
-    return false;
   },
   determinePrecedence: function() {
     // have a variable to store the accumulated sum of operations
@@ -177,10 +183,6 @@ var dev = {
     api.num(2);
     var result = api.calculate();
     return result;
-  },
-  printMemory: function() {
-    console.log("Memory: ", memory);
-    console.log("Previous Memory State: ", previousMemoryState);
   },
   runTests: function() {
     for (var testname in test) {
