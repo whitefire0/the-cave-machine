@@ -62,7 +62,9 @@
       }
     },
     printMemory: function(){
-      console.log(memory.queue)
+      console.log(memory.queue);
+      console.log(`Pending calculation: ${memory.queue.join(' ').toString()}`)
+
     },
     store: function(val) {
       if(core.checkInput(val)) {
@@ -99,6 +101,7 @@
     clear: function() {
       memory.queue = [];
       previousMemoryState.queue = [];
+      console.log('Memory cleared');
     }
   }
 
@@ -117,10 +120,9 @@ var core = {
     }
   },
   calculate: function() {
+    // BUG: 
     console.log(`Calculation: ${memory.queue.join(' ').toString()}`);
-    var operatorPrecedence = ['*', '/', '+', '-']
-    // have a variable to store the sum of operation/value set
-    var totalSum = 0;
+    var operatorPrecedence = ['*', '/', '+', '-'];
     // for each operator precendece
     operatorPrecedence.forEach(function(operator, i, operatorsArray){
 
@@ -130,54 +132,38 @@ var core = {
 
           memory.queue.forEach(function(val, j, memoryArray){
             var operatorIndex = memoryArray.indexOf(operator);
-            var indexLeftHandValue = operatorIndex - 1;
-            var indexRightHandValue = operatorIndex + 1;
-            var leftHandValueAsString = memoryArray[indexLeftHandValue].toString();
-            var rightHandValueAsString = memoryArray[indexRightHandValue].toString();
-            var stringForEval = leftHandValueAsString.concat(operator, rightHandValueAsString);
-            var sumOfSet = eval(stringForEval);
-            totalSum += sumOfSet;
-            memoryArray.splice(indexLeftHandValue, 3, sumOfSet);
 
-            if(memoryArray.includes(operator)) {
-              whilstOperatorsExist(operator);
+            if (operatorIndex > 0) {
+              var indexLeftHandValue = operatorIndex - 1;
+              var indexRightHandValue = operatorIndex + 1;
+              var leftHandValueAsString = memoryArray[indexLeftHandValue].toString();
+              var rightHandValueAsString = memoryArray[indexRightHandValue].toString();
+              var stringForEval = leftHandValueAsString.concat(operator, rightHandValueAsString);
+              var sumOfSet = eval(stringForEval);
+              memoryArray.splice(indexLeftHandValue, 3, sumOfSet);
+
+              if(memoryArray.includes(operator)) {
+                whilstOperatorsExist(operator);
+              }
             }
-
+          
           });
         })(operator)
       }
       
     });    
-    console.log(`Result: ${totalSum}`);
+    console.log(`Result: ${memory.queue[0]}`);
   },
 }
 
 var api = consoleAPI;
 
-var dev = {
-  addTwo: function() {
-    api.num(1);
-    api.add();
-    api.num(2);
-    var result = api.calculate();
-    return result;
-  },
-  createDummy: function() {
-    api.num(1);
-    api.add();
-    api.num(2);
-    api.calculate();
-  },
-  runTests: function() {
-    for (var testname in test) {
-      test[testname]();
-    }
-  }
-}
-
 var test = {
   addTwo: function() {
-    console.assert(dev.addTwo() == 3);
+    api.num(1);
+    api.add();
+    api.num(2);
+    console.assert(api.calculate() == 3);
     api.clear();
   },
   addThree: function() {
@@ -199,6 +185,21 @@ var test = {
     api.num(1);
     console.assert(api.calculate() == 2);
     api.clear();
+  },
+  multiplyTwoAddOne: function() {
+    api.num(1);
+    api.add();
+    api.num(2);
+    api.multiply();
+    api.num(3);
+    // debugger;
+    var result = api.calculate();
+    return result;
+  },
+  runTests: function() {
+    for (var testname in test) {
+      test[testname]();
+    }
   }
 }
 
