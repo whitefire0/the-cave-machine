@@ -218,6 +218,21 @@ var test = {
     var expected = 19;
     return Boolean(result == expected);
   },
+  multiplyFourDivideByTwo: function() {
+    api.multiply();
+    api.num(2);
+    api.multiply();
+    api.num(2);
+    api.multiply();
+    api.num(2);
+    api.multiply();
+    api.num(2);
+    api.divide(2);
+    api.num(2);
+    var result = api.calculate();
+    var expected = 8;
+    return Boolean(result == expected);
+  },
   runTests: function() {
     dev.skipPrinting = true;
     for (var testname in test) {
