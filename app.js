@@ -94,7 +94,7 @@
       this.store('/');
     },
     calculate: function() {
-      
+      core.calculate();
     },
     clear: function() {
       memory.queue = [];
@@ -116,26 +116,34 @@ var core = {
       }
     }
   },
-  determinePrecedence: function() {
-    // have a variable to store the accumulated sum of operations
-    var result = 0;
-      // for each operator in array
-      for (var i = 0; i < memory.operators.length; i++) {
-        memory.operators.forEach(function(val, index, array){
-          if(val == '*') {
-            //TODO: for this to work more efficiently, the memory should store both operators and values in one array
-          }
-        });
+  calculate: function() {
+    console.log(`Calculation: ${memory.queue.join(' ').toString()}`);
+    var operatorPrecedence = ['*', '/', '+', '-']
+    // have a variable to store the sum of operation/value set
+    var totalSum = 0;
+    // for each operator precendece
+    operatorPrecedence.forEach(function(operator, i, operatorsArray){
+      if(memory.queue.includes(operator)){
+        (function whilstOperatorsExist(operator){
+          memory.queue.forEach(function(val, j, memoryArray){
+            var indexOfOperator = memoryArray.indexOf(operator);
+            var indexLeftHandValue = indexOfOperator - 1;
+            var indexRightHandValue = indexOfOperator + 1;
+            var leftHandValueAsString = memoryArray[indexLeftHandValue].toString();
+            var rightHandValueAsString = memoryArray[indexRightHandValue].toString();
+            var stringForEval = leftHandValueAsString.concat(operator, rightHandValueAsString);
+            var sumOfSet = eval(stringForEval);
+            totalSum += sumOfSet;
+            memoryArray.splice(indexLeftHandValue, 3, sumOfSet);
+            if(memoryArray.includes(operator)) {
+              whilstOperatorsExist(operator);
+            }
+          });
+        })(operator)
       }
-        
-        // search array for operators in order of precendece
-        // on finding an operator, find the adjacent values, calculate and add to sum
-        // remove these values and the operator from their respective arrays
-
-    // can this be incorporated into reduce as a callback?
-  
-
-  }
+    });    
+    console.log(`Result: ${totalSum}`);
+  },
 }
 
 var api = consoleAPI;
@@ -147,6 +155,12 @@ var dev = {
     api.num(2);
     var result = api.calculate();
     return result;
+  },
+  createDummy: function() {
+    api.num(1);
+    api.add();
+    api.num(2);
+    api.calculate();
   },
   runTests: function() {
     for (var testname in test) {
