@@ -123,24 +123,30 @@ var core = {
     var totalSum = 0;
     // for each operator precendece
     operatorPrecedence.forEach(function(operator, i, operatorsArray){
+
       if(memory.queue.includes(operator)){
+
         (function whilstOperatorsExist(operator){
+
           memory.queue.forEach(function(val, j, memoryArray){
-            var indexOfOperator = memoryArray.indexOf(operator);
-            var indexLeftHandValue = indexOfOperator - 1;
-            var indexRightHandValue = indexOfOperator + 1;
+            var operatorIndex = memoryArray.indexOf(operator);
+            var indexLeftHandValue = operatorIndex - 1;
+            var indexRightHandValue = operatorIndex + 1;
             var leftHandValueAsString = memoryArray[indexLeftHandValue].toString();
             var rightHandValueAsString = memoryArray[indexRightHandValue].toString();
             var stringForEval = leftHandValueAsString.concat(operator, rightHandValueAsString);
             var sumOfSet = eval(stringForEval);
             totalSum += sumOfSet;
             memoryArray.splice(indexLeftHandValue, 3, sumOfSet);
+
             if(memoryArray.includes(operator)) {
               whilstOperatorsExist(operator);
             }
+
           });
         })(operator)
       }
+      
     });    
     console.log(`Result: ${totalSum}`);
   },
