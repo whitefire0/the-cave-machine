@@ -51,13 +51,14 @@
   }
 
   var previousMemoryState = {
-    queue: [],
+    queue: []
   }
 
   var consoleAPI = {
     checkChange: function(val) {
       if(memory.queue.length > previousMemoryState.queue.length) {
         console.log(`${val} was added to memory position ${memory.queue.length - 1}`);
+        return true;
       }
     },
     printMemory: function(){
@@ -66,9 +67,15 @@
     store: function(val) {
       if(core.checkInput(val)) {
         memory.queue.push(val);
-        this.checkChange(val);
+        if(this.checkChange(val)){
+          previousMemoryState.queue.push(val);
+        }
       } else {
-        console.log(`Error adding ${val} to memory. Operators and numbers must alternate`);
+        if (memory.queue.length == 0) {
+          console.log('On a new calulation, the first memory value must be a number');
+        } else {
+          console.log(`Error adding ${val} to memory. Operators and numbers must alternate`);
+        }
       }
     },
     num: function(val) {
@@ -113,34 +120,14 @@
         return result;
       } 
     },
-    equals: function() {
-      var firstNum = memory.numbers[0];
-      var secondNum = memory.numbers[1];
-      var operator = memory.operators[0];
-      var result;
-      if (operator == '+') {
-        result = firstNum + secondNum;
-      }
-      console.log(`${firstNum} + ${secondNum} = ${result}`)
-    },
     clear: function() {
-      memory.numbers = [];
-      memory.operators = [];
-      previousMemoryState.numbers = [],
-      previousMemoryState.operators = []
-
-      if(memory.numbers.length == 0) {
-        console.log(`Memory cleared successfully`);
-      } else {
-        console.log(`There was an error clearing the memory, please debug your code.`)
-      }
 
     }
   }
 
 var core = {
   checkInput: function(input) {
-    if (memory.queue.length == 0) {
+    if (memory.queue.length == 0 && typeof(input) == 'number') {
       return true;
     } else {
       if(typeof(input) == 'string' && typeof(memory.queue[memory.queue.length - 1]) == 'number') {
