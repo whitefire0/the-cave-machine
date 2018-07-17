@@ -96,7 +96,7 @@
       this.store('/');
     },
     calculate: function() {
-      core.calculate();
+      return core.calculate();
     },
     clear: function() {
       memory.queue = [];
@@ -153,6 +153,8 @@ var core = {
       
     });    
     console.log(`Result: ${memory.queue[0]}`);
+    // debugger;
+    return memory.queue[0];
   },
 }
 
@@ -163,8 +165,10 @@ var test = {
     api.num(1);
     api.add();
     api.num(2);
-    console.assert(api.calculate() == 3);
+    var result = api.calculate();
+    var expected = 3;
     api.clear();
+    return Boolean(result == expected);
   },
   addThree: function() {
     api.num(1);
@@ -172,8 +176,10 @@ var test = {
     api.num(1);
     api.add();
     api.num(1);
-    console.assert(api.calculate() == 3);
+    var result = api.calculate();
+    var expected = 3;
     api.clear();
+    return Boolean(result == expected);
   },
   addThreeMinusOne: function() {
     api.num(1);
@@ -183,8 +189,10 @@ var test = {
     api.num(1);
     api.minus();
     api.num(1);
-    console.assert(api.calculate() == 2);
+    var result = api.calculate();
+    var expected = 2;
     api.clear();
+    return Boolean(result == expected);
   },
   multiplyTwoAddOne: function() {
     api.num(1);
@@ -192,13 +200,22 @@ var test = {
     api.num(2);
     api.multiply();
     api.num(3);
-    // debugger;
     var result = api.calculate();
-    return result;
+    var expected = 7;
+    // debugger;
+    return Boolean(result == expected);
   },
   runTests: function() {
     for (var testname in test) {
-      test[testname]();
+      if(testname !== 'runTests'){
+        if(test[testname]()) {
+          // debugger;
+          console.log(`____TEST   ${testname}:   PASSED____`);
+        } else {
+          console.log(`____TEST   ${testname}:   FAILED____`);
+        }
+      }
+        
     }
   }
 }
