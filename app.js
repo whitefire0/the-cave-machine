@@ -172,7 +172,6 @@ var test = {
     api.num(2);
     var result = api.calculate();
     var expected = 3;
-    api.clear();
     return Boolean(result == expected);
   },
   addThree: function() {
@@ -183,7 +182,6 @@ var test = {
     api.num(1);
     var result = api.calculate();
     var expected = 3;
-    api.clear();
     return Boolean(result == expected);
   },
   addThreeMinusOne: function() {
@@ -196,7 +194,6 @@ var test = {
     api.num(1);
     var result = api.calculate();
     var expected = 2;
-    api.clear();
     return Boolean(result == expected);
   },
   multiplyTwoAddOne: function() {
@@ -207,18 +204,18 @@ var test = {
     api.num(3);
     var result = api.calculate();
     var expected = 7;
-    // debugger;
     return Boolean(result == expected);
   },
-  multiplyTwoAddOne: function() {
+  multiplyThreeAddOne: function() {
     api.num(1);
     api.add();
     api.num(2);
     api.multiply();
     api.num(3);
+    api.multiply();
+    api.num(3);
     var result = api.calculate();
-    var expected = 7;
-    // debugger;
+    var expected = 19;
     return Boolean(result == expected);
   },
   runTests: function() {
@@ -229,9 +226,9 @@ var test = {
           // debugger;
           console.log(`%c${testname}: TEST PASSED\n\n`, 'color: green; font: bold;');
         } else {
-          console.log(`%c${testname}: TEST FAILED\n\n`, 'color: green; font: bold;');
+          console.log(`%c${testname}: TEST FAILED\n\n`, 'color: red; font: bold;');
         }
-
+        api.clear();
       }
         
     }
