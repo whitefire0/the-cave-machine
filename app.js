@@ -54,9 +54,13 @@
     queue: []
   }
 
+  var dev = {
+    skipPrinting: false
+  }
+
   var consoleAPI = {
     checkChange: function(val) {
-      if(memory.queue.length > previousMemoryState.queue.length) {
+      if(memory.queue.length > previousMemoryState.queue.length && !dev.skipPrinting) {
         console.log(`${val} was added to memory position ${memory.queue.length - 1}`);
         return true;
       }
@@ -101,7 +105,8 @@
     clear: function() {
       memory.queue = [];
       previousMemoryState.queue = [];
-      console.log('Memory cleared');
+      if(!dev.skipPrinting)
+        console.log('Memory cleared');
     }
   }
 
@@ -205,7 +210,19 @@ var test = {
     // debugger;
     return Boolean(result == expected);
   },
+  multiplyTwoAddOne: function() {
+    api.num(1);
+    api.add();
+    api.num(2);
+    api.multiply();
+    api.num(3);
+    var result = api.calculate();
+    var expected = 7;
+    // debugger;
+    return Boolean(result == expected);
+  },
   runTests: function() {
+    dev.skipPrinting = true;
     for (var testname in test) {
       if(testname !== 'runTests'){
         if(test[testname]()) {
