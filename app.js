@@ -47,6 +47,7 @@
    */
 
   var memory = {
+    queue: [],
     operators: [],
     numbers: [],
     sum: 0
@@ -96,10 +97,6 @@
         console.log(`Calculation result: ${result}`);
         return result;
       } 
-      
-      
-      
-
     },
     equals: function() {
       var firstNum = memory.numbers[0];
@@ -148,6 +145,26 @@ var core = {
       console.log("Ensure operators > 0 and numbers > 1");
     }
     return false;
+  },
+  determinePrecedence: function() {
+    // have a variable to store the accumulated sum of operations
+    var result = 0;
+      // for each operator in array
+      for (var i = 0; i < memory.operators.length; i++) {
+        memory.operators.forEach(function(val, index, array){
+          if(val == '*') {
+            //TODO: for this to work more efficiently, the memory should store both operators and values in one array
+          }
+        });
+      }
+        
+        // search array for operators in order of precendece
+        // on finding an operator, find the adjacent values, calculate and add to sum
+        // remove these values and the operator from their respective arrays
+
+    // can this be incorporated into reduce as a callback?
+  
+
   }
 }
 
