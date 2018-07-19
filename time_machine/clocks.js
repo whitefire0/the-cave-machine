@@ -1,23 +1,3 @@
-// var clock1 = new Date(2018, 7, 18, 20, 34, 0);
-// var clock2 = new Date(2018, 7, 18, 20, 34, 0);
-
-// console.log(clock1);
-
-// var i = 0;
-// while (i < 1440) {
-//   clock1.setSeconds(60);
-//   clock2.setSeconds(-60);
-//   var clock1hours = clock1.getHours();
-//   var clock1mins = clock1.getMinutes();
-//   var clock2hours = clock2.getHours();
-//   var clock2mins = clock2.getMinutes();
-//   console.log(`${clock1hours}:${clock1mins}\t${clock2hours}:${clock2mins}`);
-//   if(clock1hours == clock2hours && clock1mins == clock2mins){
-//     console.log("\n\n\n\n\n\n\nequal time\n\n\n\n\n\n\n");
-//   }
-//   i++;
-// }
-
 class Clock {
   constructor(direction) {
     this.time = new Date(2018, 7, 18, 20, 34, 0);
