@@ -22,11 +22,11 @@ class TimePiece {
 
 
   setTimeArray(clockhand) {
-    this.time_array.push(clockhand[0], clockhand[1]);
+    this.time_array.push(parseInt(clockhand[0]), parseInt(clockhand[1]));
   }
 
   moveMinuteHand() {
-
+    this.time_array[3]++;
   }
 
   incrementDecMinutes() {
@@ -59,6 +59,8 @@ class TimePiece {
 }
 
 let t = new TimePiece().setHours(20).setMinutes(34);
+console.log(t);
+t.moveMinuteHand();
 console.log(t);
 /*
 class Clock {
