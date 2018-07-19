@@ -4,26 +4,25 @@ class TimePiece {
     this.MAX_DEC_MINUTE_HAND = 5;
     this.MAX_HOUR_HAND = 9;
     this.MAX_DEC_HOUR_HAND = 2;
+    this.time_array = [];
   }
 
   setHours(hours) {
     // debugger;
     this.hours = this.ensureTwoDigits(hours.toString());
+    this.setTimeArray(this.hours);
     return this;
   }
 
   setMinutes(minutes){
     this.minutes = this.ensureTwoDigits(minutes.toString());
+    this.setTimeArray(this.minutes);
     return this;
   }
 
-  makeArrayRepresentation() {
-    this.time_array = [
-      this.hours[0],
-      this.hours[1],
-      this.minutes[0],
-      this.minutes[1]
-    ]
+
+  setTimeArray(clockhand) {
+    this.time_array.push(clockhand[0], clockhand[1]);
   }
 
   moveMinuteHand() {
@@ -59,7 +58,7 @@ class TimePiece {
   }
 }
 
-let t = new TimePiece().setHours(3).setMinutes(3);
+let t = new TimePiece().setHours(20).setMinutes(34);
 console.log(t);
 /*
 class Clock {
