@@ -25,7 +25,10 @@ class TimePiece {
   }
 
   moveMinuteHand() {
-    if(this.time_array[3] <= this.MAX_MINUTE_HAND){
+    if(this.time_array[0] == 2 && this.time_array[1] == 3 && this.time_array[2] == 5 && this.time_array[3] == 9) {
+      debugger;
+    }
+    if(this.time_array[3] < this.MAX_MINUTE_HAND){
       this.time_array[3]++;
     } else {
       this.time_array[3] = 0;
@@ -34,7 +37,7 @@ class TimePiece {
   }
 
   incrementDecMinutes() {
-    if(this.time_array[2] <= this.MAX_DEC_MINUTE_HAND){
+    if(this.time_array[2] < this.MAX_DEC_MINUTE_HAND){
       this.time_array[2]++;
     } else {
       this.time_array[2] = 0;
@@ -43,16 +46,23 @@ class TimePiece {
   }
 
   incrementHours() {
-    if(this.time_array[1] <= this.MAX_HOUR_HAND){
+    if(this.time_array[0] == 2) {
+      this.MAX_HOUR_HAND = 6;
+    }
+    if(this.time_array[1] < this.MAX_HOUR_HAND){
       this.time_array[1]++;
     } else {
-      this.time_array[1] = 0;
-      this.incrementHours();
+      if(this.time_array[0] == 2) {
+        this.resetClock();
+      } else {
+        this.time_array[1] = 0;
+        this.incrementDecHours();
+      }
     }
   }
 
   incrementDecHours() {
-    if(this.time_array[0] <= this.MAX_DEC_HOUR_HAND){
+    if(this.time_array[0] < this.MAX_DEC_HOUR_HAND){
       this.time_array[0]++;
     } else {
       this.time_array[0] = 0;
@@ -108,6 +118,15 @@ class AccurateTimeArray {
 }
 
 let testPiece = new TimePiece().setHours(20).setMinutes(34);
+console.log(testPiece.time_array);
+let i = 0;
+while(i < 500){
+  testPiece.moveMinuteHand();
+  console.log(testPiece.time_array);
+  i++;
+}
+
+
 
 /*
 class Clock {
