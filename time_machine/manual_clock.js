@@ -20,25 +20,50 @@ class TimePiece {
     return this;
   }
 
-
   setTimeArray(clockhand) {
     this.time_array.push(parseInt(clockhand[0]), parseInt(clockhand[1]));
   }
 
   moveMinuteHand() {
-    this.time_array[3]++;
+    if(this.time_array[3] <= this.MAX_MINUTE_HAND){
+      this.time_array[3]++;
+    } else {
+      this.time_array[3] = 0;
+      this.incrementDecMinutes();
+    }
   }
 
   incrementDecMinutes() {
-
+    if(this.time_array[2] <= this.MAX_DEC_MINUTE_HAND){
+      this.time_array[2]++;
+    } else {
+      this.time_array[2] = 0;
+      this.incrementHours();
+    }
   }
 
   incrementHours() {
-
+    if(this.time_array[1] <= this.MAX_HOUR_HAND){
+      this.time_array[1]++;
+    } else {
+      this.time_array[1] = 0;
+      this.incrementHours();
+    }
   }
 
   incrementDecHours() {
+    if(this.time_array[0] <= this.MAX_DEC_HOUR_HAND){
+      this.time_array[0]++;
+    } else {
+      this.time_array[0] = 0;
+      this.resetClock();
+    }
+  }
 
+  resetClock() {
+    this.time_array.forEach(val => {
+      val = 0;
+    });
   }
 
   ensureTwoDigits(value) {
@@ -58,10 +83,32 @@ class TimePiece {
   }
 }
 
-let t = new TimePiece().setHours(20).setMinutes(34);
-console.log(t);
-t.moveMinuteHand();
-console.log(t);
+class AccurateTimeArray {
+  constructor() {
+    this.accurate_array = [];
+    let time = new Date(2018, 7, 19, 20, 34, 0);
+    let example = "Sun Aug 19 2018 20:34:00 GMT+0100 (British Summer Time)";
+    
+    let minutesInDay = 1440;
+    let i = 0;
+    let iTime = [];
+    while (i < minutesInDay) {
+      let timeString = time.toString();
+      let time_array = [
+        timeString[16],
+        timeString[17],
+        timeString[19],
+        timeString[20]
+      ]
+      this.accurate_array.push(time_array);
+      time.setSeconds(60);
+      i++;
+    } 
+  }
+}
+
+let testPiece = new TimePiece().setHours(20).setMinutes(34);
+
 /*
 class Clock {
   constructor(direction) {
