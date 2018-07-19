@@ -1,21 +1,29 @@
 class TimePiece {
   constructor() {
-    
+    this.MAX_MINUTE_HAND = 9;
+    this.MAX_DEC_MINUTE_HAND = 5;
+    this.MAX_HOUR_HAND = 9;
+    this.MAX_DEC_HOUR_HAND = 2;
   }
 
   setHours(hours) {
     // debugger;
-    this.hours = hours;
+    this.hours = this.ensureTwoDigits(hours.toString());
     return this;
   }
 
   setMinutes(minutes){
-    this.minutes = minutes;
+    this.minutes = this.ensureTwoDigits(minutes.toString());
     return this;
   }
 
   makeArrayRepresentation() {
-
+    this.time_array = [
+      this.hours[0],
+      this.hours[1],
+      this.minutes[0],
+      this.minutes[1]
+    ]
   }
 
   moveMinuteHand() {
@@ -50,6 +58,9 @@ class TimePiece {
     };
   }
 }
+
+let t = new TimePiece().setHours(3).setMinutes(3);
+console.log(t);
 /*
 class Clock {
   constructor(direction) {
